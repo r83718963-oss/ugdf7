@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn Cash</title>
+
+<script src='//libtl.com/sdk.js'
+data-zone='11283228'
+data-sdk='show_11283228'></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:#fff;
+padding-bottom:85px;
+}
+
+.header{
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.profile{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#22c55e;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+}
+
+.balance-card{
+margin:15px;
+padding:25px;
+border-radius:25px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.balance{
+font-size:40px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+padding:15px;
+}
+
+.box{
+background:#1e293b;
+padding:20px;
+border-radius:18px;
+text-align:center;
+}
+
+.watch-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:15px;
+background:#22c55e;
+color:#fff;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#111827;
+display:flex;
+justify-content:space-around;
+align-items:center;
+border-top:1px solid #334155;
+}
+
+.nav-btn{
+background:none;
+border:none;
+color:#94a3b8;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:12px;
+}
+
+.nav-btn i{
+font-size:22px;
+margin-bottom:4px;
+}
+
+.active{
+color:#22c55e;
+}
+
+.page{
+display:none;
+}
+
+.page.active-page{
+display:block;
+}
+
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+
+<div id="home" class="page active-page">
+
+<div class="header">
+
+<div class="profile">
+<div class="avatar">E</div>
+<div>
+<b>Emran</b><br>
+<small>Premium User</small>
+</div>
+</div>
+
+<i class="fa-solid fa-bell"></i>
+
+</div>
+
+<div class="balance-card">
+<p>Total Balance</p>
+<div class="balance" id="balance">0</div>
+</div>
+
+<div class="grid">
+
+<div class="box">
+<h3>Ads Watched</h3>
+<h2 id="ads">0</h2>
+</div>
+
+<div class="box">
+<h3>Referral</h3>
+<h2>0</h2>
+</div>
+
+</div>
+
+<div style="padding:15px;">
+<button class="watch-btn" onclick="watchAd()">
+Watch Rewarded Ad
+</button>
+</div>
+
+</div>
+
+<!-- WALLET -->
+
+<div id="wallet" class="page">
+<div class="header"><h2>Wallet</h2></div>
+
+<div class="balance-card">
+<h3>Current Balance</h3>
+<div class="balance" id="walletBalance">0</div>
+</div>
+
+</div>
+
+<!-- REFER -->
+
+<div id="refer" class="page">
+<div class="header"><h2>Refer & Earn</h2></div>
+
+<div class="box" style="margin:15px;">
+<h3>Your Code</h3>
+<br>
+<h2>EMRAN123</h2>
+</div>
+
+</div>
+
+<!-- PROFILE -->
+
+<div id="profile" class="page">
+<div class="header"><h2>Profile</h2></div>
+
+<div class="box" style="margin:15px;">
+<p>Name: Emran</p>
+<br>
+<p>Status: Active</p>
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<button class="nav-btn active" onclick="showPage('home',this)">
+<i class="fa-solid fa-house"></i>
+<span>Home</span>
+</button>
+
+<button class="nav-btn" onclick="showPage('wallet',this)">
+<i class="fa-solid fa-wallet"></i>
+<span>Wallet</span>
+</button>
+
+<button class="nav-btn" onclick="showPage('refer',this)">
+<i class="fa-solid fa-user-group"></i>
+<span>Refer</span>
+</button>
+
+<button class="nav-btn" onclick="showPage('profile',this)">
+<i class="fa-solid fa-user"></i>
+<span>Profile</span>
+</button>
+
+</div>
+
+<script>
+
+let balance =
+Number(localStorage.getItem("balance")) || 0;
+
+let ads =
+Number(localStorage.getItem("ads")) || 0;
+
+updateUI();
+
+function updateUI(){
+
+document.getElementById("balance").innerText = balance;
+document.getElementById("walletBalance").innerText = balance;
+document.getElementById("ads").innerText = ads;
+
+}
+
+async function watchAd(){
+
+try{
+
+await show_11283228();
+
+balance += 10;
+ads += 1;
+
+localStorage.setItem("balance",balance);
+localStorage.setItem("ads",ads);
+
+updateUI();
+
+}catch(e){
+
+console.log(e);
+
+}
+
+}
+
+function showPage(id,btn){
+
+document.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active-page"));
+
+document.getElementById(id)
+.classList.add("active-page");
+
+document.querySelectorAll(".nav-btn")
+.forEach(x=>x.classList.remove("active"));
+
+btn.classList.add("active");
+
+}
+
+</script>
+
+</body>
+</html>
